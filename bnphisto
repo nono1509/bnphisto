@@ -1,0 +1,25 @@
+#!/bin/bash
+
+
+pip install --user virtualenv
+mkdir ~/projets/banque
+virtualenv ~/projets/banque
+cd ~/projets/banque
+
+source bin/activate
+git clone git://git.symlink.me/pub/weboob/devel.git weboob
+
+ln -s ../weboob/weboob lib/.
+find weboob/scripts -type f -exec ln -s ../{} bin/. \;
+
+PYTHONPATH=${PYTHONPATH}:${VIRTUAL_ENV}/lib
+export PYTHONPATH
+
+pip install --upgrade pip
+pip install requests[security]
+pip install dateutils prettytable mechanize
+#apt-get install libxml2-dev libxslt-dev libjpeg-dev
+pip install lxml pillow pyYAML html2text feedparser BeautifulSoup gdata
+
+weboob-config update
+
